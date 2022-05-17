@@ -22,6 +22,7 @@ export class CursoComponent implements OnInit {
 
   // - Cadastro
   cadastro(curso: Curso) {
+
     this.cursoServico.cadastrarCurso(curso).subscribe(
       (res: Curso[]) => {
 
@@ -29,8 +30,8 @@ export class CursoComponent implements OnInit {
         this.vetor = res;
 
         // - Limpar atributos
-        //this.curso.nomeCurso = "";
-        //this.curso.valorCurso = 0;
+        this.curso.nomeCurso = "";
+        this.curso.valorCurso = 0;
 
         // - Atualizar a listagem de cursos
         this.selecao();
@@ -43,20 +44,49 @@ export class CursoComponent implements OnInit {
   selecao() {
     //this.cursoServico.obterCursos();
     this.cursoServico.obterCursos().subscribe(
-      (res: Curso[]) => {
+      (res: any) => {
         this.vetor = res
       }
     );
   }
 
-  // - Alterar
-  alterar(): void {
-    alert("Alterar");
+  // - Alterar:
+  alterar(curso: Curso) {
+    console.log(curso);
+    this.cursoServico.atualizarCurso(curso).subscribe(
+      (res) => {
+        
+        // - Atualiza vetor
+        this.vetor = res;
+
+        // - Limpar os Valores do objeto
+        this.curso.nomeCurso = "";
+        this.curso.valorCurso = 0;
+
+        // - Atualizar a listagem
+        this.selecao();
+      }
+    )
   }
 
   // - Remover
-  remover(): void {
-    alert("Remover");
+  remover(curso: Curso) {
+    this.cursoServico.removerCurso(curso).subscribe(
+      (res : Curso[]) => {
+        this.vetor = res;
+
+        this.curso.nomeCurso = "";
+        this.curso.valorCurso = 0;
+
+        this.selecao();
+      }
+    )
+  }
+
+  selecionarCurso(c: Curso) {
+    this.curso.idCurso = c.idCurso;
+    this.curso.nomeCurso = c.nomeCurso;
+    this.curso.valorCurso = c.valorCurso;
   }
 
 }

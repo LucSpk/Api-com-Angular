@@ -3,6 +3,5 @@
     nomeCurso!: string;
     valorCurso!: number;
     idCurso?: number;
-  
     
  }
